@@ -165,6 +165,7 @@ export default {
 }
 
 #addproduct-form .card-body .form-group .add-data {
+  margin-top: 6px;
   margin-left: 26rem;
   background-color: seagreen;
   color: white;
