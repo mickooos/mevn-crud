@@ -1,0 +1,97 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+.navbar-expand-lg {
+    background-color: seagreen;
+    font-weight: bold;
+}
+
+.app-logo {
+    width: 32px;
+    height: 32px;
+    margin-left: 5px;
+}
+
+.dashboard {
+    margin-top: 90px;
+}
+
+.addproduct-page {
+    margin-top: 100px;
+}
+
+.editproduct-page {
+    margin-top: 100px;
+}
+
+.foooters {
+    margin-top: 100px;
+    background-color: transparent;
+}
+
+.foooters p {
+    color: seagreen;
+    font-weight: bold;
+    text-align: center;
+}
+
+.foooters a {
+    color: seagreen;
+    text-decoration: none;
+}
+
+.foooters a:hover {
+    color: #34a88d;
+    text-decoration: none;
+}
+
+/* Media Queries */
+
+/* Tablet */
+@media (max-width: 1000px) {
+
+    html {
+        font-size: 100%;
+    }
+
+    .dashboard {
+        margin-bottom: 100px;
+        margin-top: 135px;
+    }
+
+    .addproduct-page {
+        margin-top: 140px;
+    }
+
+    .editproduct-page {
+        margin-top: 160px;
+    }
+}
+
+/* Mobile Phone */
+@media (max-width: 500px) {
+
+    html {
+        font-size: 80%;
+    }
+
+    .dashboard {
+        margin-bottom: 70px;
+        margin-top: 90px;
+    }
+
+    .addproduct-page {
+        margin-top: 87px;
+    }
+
+    .editproduct-page {
+        margin-top: 85px;
+    }
+}
