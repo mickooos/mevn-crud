@@ -1,63 +1,3 @@
-<script setup>
-import axios from 'axios'
-import { ref, computed } from 'vue'
-
-const user = ref()
-const products = ref([])
-const search = ref('')
-
-const getUser = async (__api) => {
-  try {
-    await axios
-      .get(__api, {
-        withCredentials: true
-      })
-      .then((res) => {
-        user.value = res.data.map((item) => item.name).toString()
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
-  } catch (error) {
-    console.log(error)
-  }
-}
-getUser(`${import.meta.env.VITE_API_URL}/v1/user`)
-
-const getProducts = async (__api) => {
-  try {
-    const response = await axios.get(__api, {
-      withCredentials: true
-    })
-    products.value = response.data.products
-  } catch (error) {
-    console.log(error)
-  }
-}
-getProducts(`${import.meta.env.VITE_API_URL}/v2/products`)
-
-const getImage = (img) => {
-  return new URL(`../uploads/${img}`, import.meta.url).href
-}
-
-const deleteProduct = async (id) => {
-  try {
-    const __api = `${import.meta.env.VITE_API_URL}/v2/product/${id}`
-    await axios.delete(__api, {
-      withCredentials: true
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const productsFilter = computed(() => {
-  return products.value.filter((item) => {
-    return item.name.toLowerCase().includes(search.value.toLowerCase())
-  })
-})
-</script>
-
 <template>
   <div>
     <body>
@@ -101,6 +41,72 @@ const productsFilter = computed(() => {
     </body>
   </div>
 </template>
+
+<script setup>
+import axios from 'axios'
+import { ref, computed } from 'vue'
+
+const user = ref()
+const products = ref([])
+const search = ref('')
+
+const getUser = async (__api) => {
+  try {
+    await axios
+      .get(__api)
+      .then((res) => {
+        user.value = res.data.map((item) => item.name).toString()
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+getUser('/v1/user')
+
+const getProducts = async (__api) => {
+  try {
+    await axios
+      .get(__api)
+      .then((res) => {
+        products.value = res.data.products
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+getProducts('/v2/products')
+
+const getImage = (img) => {
+  return new URL(`../uploads/${img}`, import.meta.url).href
+}
+
+const deleteProduct = async (id) => {
+  try {
+    await axios
+      .delete(`/v2/product/${id}`)
+      .then((res) => {
+        console.log(res.data.message)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const productsFilter = computed(() => {
+  return products.value.filter((item) => {
+    return item.name.toLowerCase().includes(search.value.toLowerCase())
+  })
+})
+</script>
 
 <style scoped>
 div:first-child {
@@ -267,6 +273,22 @@ body {
   .product h2 {
     margin: 0;
   }
+  .product .user {
+    margin: 3rem 0 0 1.5rem;
+    font-size: 1.3rem;
+  }
+  .product .search-box {
+    margin: 1.5rem 0.3em 0.3em 1.5em;
+    width: 300px;
+    font-size: 10px;
+  }
+  .product .add-route {
+    margin: 1.5rem 0.3em 0.3em 1.5em;
+    font-size: 1rem;
+  }
+  .product .data-not-found {
+    margin: 7rem 0.3em 0.3em 4em;
+  }
   .product .row .card .card-content .card-text h3,
   .product .row .card .card-content .card-text p {
     font-size: 1.7em;
@@ -278,11 +300,14 @@ body {
 
 /* Laptop */
 @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+  .product .user {
+    margin: 3rem 0 0 9rem;
+  }
   .product .search-box {
-    margin: 3rem 0.3em 0.3em 9em;
+    margin: 1rem 0.3em 0.3em 9em;
   }
   .product .add-route {
-    margin: 2rem 0.3em -2em 11.5em;
+    margin: 1rem 0.3em -2em 11em;
   }
   .product .data-not-found {
     margin: 7rem 0.3em 0.3em 15em;

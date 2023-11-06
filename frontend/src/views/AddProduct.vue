@@ -1,76 +1,6 @@
-<script setup>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-
-const router = useRouter()
-const __api = `${import.meta.env.VITE_API_URL}/v2/products`
-const product = ref({
-  name: null,
-  price: null,
-  categories: null,
-  desc: null,
-  image: null
-})
-
-const slctCat = ref([
-  { id: 1, name: 'Monitor' },
-  { id: 2, name: 'Keyboard' },
-  { id: 3, name: 'Mouse' },
-  { id: 4, name: 'Camera' },
-  { id: 5, name: 'Microphone' }
-])
-
-const nameIsValid = computed(() => {
-  return !!product.value.name
-})
-const priceIsValid = computed(() => {
-  return !!product.value.price
-})
-const catIsValid = computed(() => {
-  return !!product.value.categories
-})
-const descIsValid = computed(() => {
-  return !!product.value.desc
-})
-const imgIsValid = computed(() => {
-  return !!product.value.image
-})
-const formIsValid = computed(() => {
-  return (
-    nameIsValid.value &&
-    priceIsValid.value &&
-    catIsValid.value &&
-    descIsValid.value &&
-    imgIsValid.value
-  )
-})
-
-const submitData = () => {
-  if (formIsValid.value) {
-    axios
-      .post(__api, product.value, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        withCredentials: true
-      })
-      .then((res) => {
-        console.log(res.data.message)
-        router.push({ path: '/' })
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
-  }
-}
-
-const handleFileUpload = (e) => {
-  product.value.image = e.target.files[0]
-}
-</script>
-
 <template>
   <body>
-    <RouterLink to="/" class="product-route"><i class="bi bi-arrow-left-circle"></i></RouterLink>
+    <RouterLink to="/" class="product-route"><i class="bi bi-arrow-left-circle" /></RouterLink>
     <div class="container">
       <h1>add<span class="title-span">Product.</span></h1>
       <p>Tambah Data Produk</p>
@@ -118,6 +48,74 @@ const handleFileUpload = (e) => {
     </div>
   </body>
 </template>
+
+<script setup>
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+const router = useRouter()
+const product = ref({
+  name: null,
+  price: null,
+  categories: null,
+  desc: null,
+  image: null
+})
+
+const slctCat = ref([
+  { id: 1, name: 'Monitor' },
+  { id: 2, name: 'Keyboard' },
+  { id: 3, name: 'Mouse' },
+  { id: 4, name: 'Camera' },
+  { id: 5, name: 'Microphone' }
+])
+
+const nameIsValid = computed(() => {
+  return !!product.value.name
+})
+const priceIsValid = computed(() => {
+  return !!product.value.price
+})
+const catIsValid = computed(() => {
+  return !!product.value.categories
+})
+const descIsValid = computed(() => {
+  return !!product.value.desc
+})
+const imgIsValid = computed(() => {
+  return !!product.value.image
+})
+const formIsValid = computed(() => {
+  return (
+    nameIsValid.value &&
+    priceIsValid.value &&
+    catIsValid.value &&
+    descIsValid.value &&
+    imgIsValid.value
+  )
+})
+
+const submitData = () => {
+  if (formIsValid.value) {
+    axios
+      .post('/v2/products', product.value, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      .then((res) => {
+        router.push({ path: '/' })
+        console.log(res.data.message)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+}
+
+const handleFileUpload = (e) => {
+  product.value.image = e.target.files[0]
+}
+</script>
 
 <style scoped>
 div:first-child {

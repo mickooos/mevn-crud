@@ -73,20 +73,19 @@ const user = ref({
   password: null,
   confPassword: null
 })
+
 const error = ref()
-const __api = `${import.meta.env.VITE_API_URL}/v1/user/register`
 const router = useRouter()
 
 const signUp = () => {
   try {
     axios
-      .post(__api, user.value, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      .post('/v1/user/register', user.value, {
+        headers: { 'Content-Type': 'application/json' }
       })
       .then((res) => {
         router.push({ name: 'signin' })
-        console.log(res)
+        console.log(res.data.message)
       })
       .catch((err) => {
         error.value = err.response.data.message

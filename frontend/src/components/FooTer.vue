@@ -28,4 +28,18 @@ footer .social p {
 footer .social a {
   color: #fff;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer .social p {
+    margin: -5rem 0 0 21rem;
+  }
+}
+
+/* Mobile Phone */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  footer .social p {
+    margin: -5rem 0 0 15rem;
+  }
+}
 </style>

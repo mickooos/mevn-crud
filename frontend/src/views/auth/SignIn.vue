@@ -55,17 +55,16 @@ const user = ref({
   email: null,
   password: null
 })
+
 const error = ref()
-const __api = `${import.meta.env.VITE_API_URL}/v1/user/login`
 const router = useRouter()
 const store = useStore()
 
 const signIn = () => {
   try {
     axios
-      .post(__api, user.value, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      .post('/v1/user/login', user.value, {
+        headers: { 'Content-Type': 'application/json' }
       })
       .then((res) => {
         store.commit('setAuthentication', true)

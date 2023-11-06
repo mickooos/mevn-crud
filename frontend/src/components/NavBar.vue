@@ -1,31 +1,3 @@
-<script setup>
-import axios from 'axios'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
-
-const __api = `${import.meta.env.VITE_API_URL}/v1/user/logout`
-const router = useRouter()
-const store = useStore()
-const logOut = () => {
-  try {
-    axios
-      .delete(__api, {
-        withCredentials: true
-      })
-      .then((res) => {
-        store.commit('setAuthentication', false)
-        router.push({ name: 'signin' })
-        console.log(res.data.message)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  } catch (error) {
-    console.log(error)
-  }
-}
-</script>
-
 <template>
   <div>
     <nav class="navbar">
@@ -38,6 +10,31 @@ const logOut = () => {
     </nav>
   </div>
 </template>
+
+<script setup>
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const router = useRouter()
+const store = useStore()
+const logOut = () => {
+  try {
+    axios
+      .delete('/v1/user/logout')
+      .then((res) => {
+        store.commit('setAuthentication', false)
+        router.push({ name: 'signin' })
+        console.log(res.data.message)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+</script>
 
 <style scoped>
 div:first-child {
